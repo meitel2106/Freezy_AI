@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Freezy AI - あなたに寄り添う、完全無料のAIアシスタント</title>
+    <style>
+        :root {
+            --primary-color: #534AB7;
+            --secondary-color: #EEEDFE;
+            --text-main: #333333;
+            --text-muted: #666666;
+            --bg-color: #F7F8FA;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        /* ヒーローセクション（トップ） */
+        .hero {
+            background: linear-gradient(135deg, var(--primary-color), #7A72D4);
+            color: white;
+            text-align: center;
+            padding: 80px 20px;
+        }
+
+        .hero h1 {
+            font-size: 2.8rem;
+            margin-bottom: 16px;
+            letter-spacing: 1px;
+            font-weight: 800;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 32px;
+            opacity: 0.95;
+            line-height: 1.8;
+        }
+
+        .download-btn {
+            display: inline-block;
+            background-color: #FFFFFF;
+            color: var(--primary-color);
+            padding: 16px 40px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        /* アピールポイント（特徴）セクション */
+        .features {
+            max-width: 1000px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 40px;
+            font-weight: 800;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .feature-card {
+            background: #FFFFFF;
+            border-radius: 16px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+            border-top: 4px solid var(--primary-color);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 16px;
+        }
+
+        .feature-title {
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+            font-weight: bold;
+        }
+
+        .feature-desc {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* スクリーンショットセクション */
+        .screenshots {
+            max-width: 1000px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+
+        .screenshot-gallery {
+            display: flex;
+            overflow-x: auto; /* スマホでは横スクロールできるようにする */
+            gap: 20px;
+            padding: 20px 0;
+            /* スクロールバーを見えにくくする */
+            scrollbar-width: none; 
+        }
+        
+        .screenshot-gallery::-webkit-scrollbar {
+            display: none;
+        }
+
+        .screenshot-img {
+            height: 450px; /* 画像の高さを揃える */
+            border-radius: 16px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+            border: 1px solid #E0E0E0;
+            flex-shrink: 0; /* 画像が潰れないようにする */
+        }
+
+        /* フッター */
+        footer {
+            background-color: #333;
+            color: #FFF;
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 60px;
+        }
+
+        /* スマホ用調整 */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.2rem; }
+            .hero p { font-size: 1.05rem; }
+            .section-title { font-size: 1.6rem; }
+            .screenshot-img { height: 350px; } /* スマホでは少し画像を小さくする */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- トップ画面 -->
+    <header class="hero">
+        <h1>Freezy AI</h1>
+        <p>面倒なアカウント登録やログインは一切不要！<br>入れた瞬間すぐ使える、完全無料のAIアシスタント。</p>
+        <!-- ※アプリ公開後、href="" の中をPlayストアのURLに変えてね -->
+        <a href="#download" class="download-btn">Google Playで無料ダウンロード</a>
+    </header>
+
+    <!-- 特徴セクション -->
+    <section class="features">
+        <h2 class="section-title">Freezy AIが選ばれる7つの理由</h2>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🚫</div>
+                <h3 class="feature-title">面倒な登録・ログイン不要</h3>
+                <p class="feature-desc">メールアドレスやSNS連携などは一切不要。アプリをダウンロードして開いたその瞬間から、すぐにAIと会話を始められます。</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🆓</div>
+                <h3 class="feature-title">完全無料・課金一切なし</h3>
+                <p class="feature-desc">アプリ内課金やサブスクリプションの罠はありません。動画を見るだけでポイントが貯まり、すべての機能をずっと無料で使えます。</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">👨‍👩‍👧‍👦</div>
+                <h3 class="feature-title">子どもからお年寄りまで安心</h3>
+                <p class="feature-desc">直感的で分かりやすいデザインを採用。難しい設定は不要で、個人情報も守られるため、ご家族みんなで安心してご利用いただけます。</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">💖</div>
+                <h3 class="feature-title">あなたに寄り添う回答</h3>
+                <p class="feature-desc">プロフィール（年代、趣味、職業など）を登録するだけで、AIがあなたの状況や好みを理解し、パーソナライズされた温かいコメントを返します。</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎛️</div>
+                <h3 class="feature-title">AIの性格を自由自在に設定</h3>
+                <p class="feature-desc">「厳しいアドバイスが欲しい」「優しく励ましてほしい」など、AIの口調、年齢感、回答の長さをスライダーであなた好みに細かくカスタマイズ可能です。</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎙️📸</div>
+                <h3 class="feature-title">文字・音声・写真で質問</h3>
+                <p class="feature-desc">キーボード入力だけでなく、マイクに向かって話しかけたり、カメラで撮った写真を送って「これについて教えて」と質問することもできます。</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">✨</div>
+                <h3 class="feature-title">次になにを聞くか、AIが予測</h3>
+                <p class="feature-desc">会話の流れから、AIが「次にあなたが聞きたそうな質問」を準備してボタンとして表示。タップするだけでサクサク会話が弾みます。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- スクリーンショットセクション -->
+    <section class="screenshots">
+        <h2 class="section-title">アプリの実際の画面</h2>
+        <div class="screenshot-gallery">
+            <!-- 🌟 画像の読み込み先を images フォルダに変更！ -->
+            <img src="images/No.1.jpg" alt="トップ画面" class="screenshot-img">
+            <img src="images/no.2.jpg" alt="チャット画面" class="screenshot-img">
+            <img src="images/No.3.jpg" alt="プロフィール設定画面" class="screenshot-img">
+            <img src="images/No.4.jpg" alt="AIカスタマイズ画面" class="screenshot-img">
+            <img src="images/No.5.jpg" alt="性格チューニング画面" class="screenshot-img">
+        </div>
+    </section>
+
+    <!-- フッター -->
+    <footer>
+        <p>&copy; 2026 Freezy AI. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
