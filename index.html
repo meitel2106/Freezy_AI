@@ -26,26 +26,45 @@
             line-height: 1.6;
         }
 
-        /* ヒーローセクション（トップ） */
+        /* 🌟 トップ画面（ヒーローセクション）の大幅進化 🌟 */
         .hero {
-            background: linear-gradient(135deg, var(--primary-color), #7A72D4);
+            background: linear-gradient(135deg, var(--primary-color) 0%, #7A72D4 100%);
             color: white;
-            text-align: center;
-            padding: 80px 20px;
+            position: relative;
+            padding: 80px 20px 120px; /* 波の分の余白を下に取る */
+            overflow: hidden;
+        }
+
+        .hero-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-text {
+            flex: 1;
+            text-align: left;
         }
 
         .hero h1 {
-            font-size: 2.8rem;
-            margin-bottom: 16px;
+            font-size: 3.2rem;
+            margin-bottom: 20px;
             letter-spacing: 1px;
-            font-weight: 800;
+            font-weight: 900;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
         .hero p {
-            font-size: 1.2rem;
-            margin-bottom: 32px;
+            font-size: 1.25rem;
+            margin-bottom: 40px;
             opacity: 0.95;
             line-height: 1.8;
+            font-weight: 500;
         }
 
         .download-btn {
@@ -57,79 +76,132 @@
             text-decoration: none;
             font-size: 1.2rem;
             font-weight: bold;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
             transition: transform 0.2s, box-shadow 0.2s;
         }
 
         .download-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.3);
         }
 
-        /* アピールポイント（特徴）セクション */
+        /* 🌟 ヒーロー画像のフワフワアニメーション 🌟 */
+        .hero-image {
+            flex: 1;
+            text-align: center;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .hero-image img {
+            max-width: 280px;
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+            border: 4px solid rgba(255, 255, 255, 0.2);
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* 🌟 滑らかな波の図形（SVG） 🌟 */
+        .wave-divider {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            overflow: hidden;
+            line-height: 0;
+        }
+
+        .wave-divider svg {
+            position: relative;
+            display: block;
+            width: calc(130% + 1.3px);
+            height: 80px;
+        }
+
+        .wave-divider .shape-fill {
+            fill: var(--bg-color);
+        }
+
+        /* 特徴セクション */
         .features {
             max-width: 1000px;
-            margin: 60px auto;
+            margin: 80px auto 60px;
             padding: 0 20px;
         }
 
         .section-title {
             text-align: center;
-            font-size: 2rem;
+            font-size: 2.2rem;
             color: var(--primary-color);
-            margin-bottom: 40px;
-            font-weight: 800;
+            margin-bottom: 50px;
+            font-weight: 900;
         }
 
         .feature-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 24px;
+            gap: 30px;
         }
 
         .feature-card {
             background: #FFFFFF;
-            border-radius: 16px;
-            padding: 30px;
+            border-radius: 20px;
+            padding: 40px 30px;
             text-align: center;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-            transition: transform 0.3s;
-            border-top: 4px solid var(--primary-color);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            overflow: hidden;
         }
 
         .feature-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.08);
         }
 
+        /* 🌟 アイコンのバッジ風デザイン 🌟 */
         .feature-icon {
-            font-size: 3rem;
-            margin-bottom: 16px;
+            font-size: 2.5rem;
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            background: linear-gradient(135deg, #FFFFFF, var(--secondary-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 16px rgba(83, 74, 183, 0.12);
         }
 
         .feature-title {
-            font-size: 1.2rem;
-            margin-bottom: 12px;
-            font-weight: bold;
+            font-size: 1.25rem;
+            margin-bottom: 16px;
+            font-weight: 800;
+            color: #222;
         }
 
         .feature-desc {
             color: var(--text-muted);
-            font-size: 0.95rem;
+            font-size: 1rem;
+            line-height: 1.7;
         }
 
         /* スクリーンショットセクション */
         .screenshots {
             max-width: 1000px;
-            margin: 60px auto;
+            margin: 80px auto;
             padding: 0 20px;
         }
 
         .screenshot-gallery {
             display: flex;
-            overflow-x: auto; /* スマホでは横スクロールできるようにする */
-            gap: 20px;
-            padding: 20px 0;
-            /* スクロールバーを見えにくくする */
+            overflow-x: auto;
+            gap: 24px;
+            padding: 20px 10px 40px;
             scrollbar-width: none; 
         }
         
@@ -138,39 +210,68 @@
         }
 
         .screenshot-img {
-            height: 450px; /* 画像の高さを揃える */
-            border-radius: 16px;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
-            border: 1px solid #E0E0E0;
-            flex-shrink: 0; /* 画像が潰れないようにする */
+            height: 480px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            border: 1px solid #EAEAEA;
+            flex-shrink: 0;
+            transition: transform 0.3s;
+        }
+
+        .screenshot-img:hover {
+            transform: scale(1.02);
         }
 
         /* フッター */
         footer {
-            background-color: #333;
+            background-color: #2A265F;
             color: #FFF;
             text-align: center;
-            padding: 30px 20px;
+            padding: 40px 20px;
             margin-top: 60px;
         }
 
-        /* スマホ用調整 */
+        /* 🌟 スマホ用調整 🌟 */
         @media (max-width: 768px) {
-            .hero h1 { font-size: 2.2rem; }
-            .hero p { font-size: 1.05rem; }
-            .section-title { font-size: 1.6rem; }
-            .screenshot-img { height: 350px; } /* スマホでは少し画像を小さくする */
+            .hero-container {
+                flex-direction: column;
+                text-align: center;
+                gap: 30px;
+            }
+            .hero-text {
+                text-align: center;
+            }
+            .hero h1 { font-size: 2.4rem; }
+            .hero p { font-size: 1.1rem; }
+            .hero-image img { max-width: 240px; }
+            .section-title { font-size: 1.8rem; }
+            .screenshot-img { height: 380px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- トップ画面 -->
+    <!-- トップ画面（グラフィカルに進化） -->
     <header class="hero">
-        <h1>Freezy AI</h1>
-        <p>面倒なアカウント登録やログインは一切不要！<br>入れた瞬間すぐ使える、完全無料のAIアシスタント。</p>
-        <!-- ※アプリ公開後、href="" の中をPlayストアのURLに変えてね -->
-        <a href="#download" class="download-btn">Google Playで無料ダウンロード</a>
+        <div class="hero-container">
+            <div class="hero-text">
+                <h1>Freezy AI</h1>
+                <p>面倒なアカウント登録やログインは一切不要！<br>入れた瞬間すぐ使える、完全無料のAIアシスタント。</p>
+                <!-- ※アプリ公開後、href="" の中をPlayストアのURLに変えてね -->
+                <a href="https://play.google.com/store/apps/details?id=com.galaxyexpress.freezyai" class="download-btn">Google Playで無料ダウンロード</a>
+            </div>
+            <div class="hero-image">
+                <!-- 🌟 画像がフワフワ浮くように設定！ -->
+                <img src="images/No.1.jpg" alt="Freezy AI トップ画面">
+            </div>
+        </div>
+        
+        <!-- 🌟 背景の境界線を波（ウェーブ）にするSVG図形 🌟 -->
+        <div class="wave-divider">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V95.8C59.71,118.08,130.83,119.5,191.56,98.53,243.68,80.4,277.5,70.52,321.39,56.44Z" class="shape-fill"></path>
+            </svg>
+        </div>
     </header>
 
     <!-- 特徴セクション -->
@@ -219,7 +320,6 @@
     <section class="screenshots">
         <h2 class="section-title">アプリの実際の画面</h2>
         <div class="screenshot-gallery">
-            <!-- 🌟 画像の読み込み先を images フォルダに変更！ -->
             <img src="images/No.1.jpg" alt="トップ画面" class="screenshot-img">
             <img src="images/no.2.jpg" alt="チャット画面" class="screenshot-img">
             <img src="images/No.3.jpg" alt="プロフィール設定画面" class="screenshot-img">
