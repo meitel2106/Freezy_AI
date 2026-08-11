@@ -1,1 +1,0 @@
-# Freezy_AI
