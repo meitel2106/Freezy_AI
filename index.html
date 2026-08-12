@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Freezy AI - Your completely free, personal AI assistant</title>
+    
+    <!-- 🌟 自動言語振り分けスクリプト 🌟 -->
+    <script>
+        // ブラウザの言語設定を取得し、日本語(ja)なら index_ja.html へ自動リダイレクト
+        const userLang = navigator.language || navigator.userLanguage;
+        if (userLang.startsWith('ja') && !window.location.pathname.includes('index_ja.html')) {
+            window.location.href = 'index_ja.html';
+        }
+    </script>
+
+    <style>
+        :root {
+            --primary-color: #534AB7;
+            --secondary-color: #EEEDFE;
+            --text-main: #333333;
+            --text-muted: #666666;
+            --bg-color: #F7F8FA;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        /* 言語切り替えボタン */
+        .language-switch {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 10;
+        }
+        
+        .language-switch a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            background: rgba(0,0,0,0.2);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            transition: background 0.3s;
+        }
+
+        .language-switch a:hover {
+            background: rgba(0,0,0,0.4);
+        }
+
+        /* トップ画面（ヒーローセクション） */
+        .hero {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #7A72D4 100%);
+            color: white;
+            position: relative;
+            padding: 80px 20px 120px;
+            overflow: hidden;
+        }
+
+        .hero-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-text {
+            flex: 1;
+            text-align: left;
+        }
+
+        .hero h1 {
+            font-size: 3.2rem;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+            font-weight: 900;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            margin-bottom: 40px;
+            opacity: 0.95;
+            line-height: 1.8;
+            font-weight: 500;
+        }
+
+        .download-btn {
+            display: inline-block;
+            background-color: #FFFFFF;
+            color: var(--primary-color);
+            padding: 16px 40px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: bold;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+        }
+
+        /* ヒーロー画像のフワフワアニメーション */
+        .hero-image {
+            flex: 1;
+            text-align: center;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .hero-image img {
+            max-width: 280px;
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+            border: 4px solid rgba(255, 255, 255, 0.2);
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* 滑らかな波の図形（SVG） */
+        .wave-divider {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            overflow: hidden;
+            line-height: 0;
+        }
+
+        .wave-divider svg {
+            position: relative;
+            display: block;
+            width: calc(130% + 1.3px);
+            height: 80px;
+        }
+
+        .wave-divider .shape-fill {
+            fill: var(--bg-color);
+        }
+
+        /* 特徴セクション */
+        .features {
+            max-width: 1000px;
+            margin: 80px auto 60px;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.2rem;
+            color: var(--primary-color);
+            margin-bottom: 50px;
+            font-weight: 900;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background: #FFFFFF;
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            background: linear-gradient(135deg, #FFFFFF, var(--secondary-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 16px rgba(83, 74, 183, 0.12);
+        }
+
+        .feature-title {
+            font-size: 1.25rem;
+            margin-bottom: 16px;
+            font-weight: 800;
+            color: #222;
+        }
+
+        .feature-desc {
+            color: var(--text-muted);
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+
+        /* スクリーンショットセクション */
+        .screenshots {
+            max-width: 1000px;
+            margin: 80px auto;
+            padding: 0 20px;
+        }
+
+        .screenshot-gallery {
+            display: flex;
+            overflow-x: auto;
+            gap: 24px;
+            padding: 20px 10px 40px;
+            scrollbar-width: none; 
+        }
+        
+        .screenshot-gallery::-webkit-scrollbar {
+            display: none;
+        }
+
+        .screenshot-img {
+            height: 480px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            border: 1px solid #EAEAEA;
+            flex-shrink: 0;
+            transition: transform 0.3s;
+        }
+
+        .screenshot-img:hover {
+            transform: scale(1.02);
+        }
+
+        /* フッター */
+        footer {
+            background-color: #2A265F;
+            color: #FFF;
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: 60px;
+        }
+
+        /* スマホ用調整 */
+        @media (max-width: 768px) {
+            .hero-container {
+                flex-direction: column;
+                text-align: center;
+                gap: 30px;
+            }
+            .hero-text {
+                text-align: center;
+            }
+            .hero h1 { font-size: 2.4rem; }
+            .hero p { font-size: 1.1rem; }
+            .hero-image img { max-width: 240px; }
+            .section-title { font-size: 1.8rem; }
+            .screenshot-img { height: 380px; }
+            .language-switch { top: 10px; right: 10px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ヘッダー言語切り替え -->
+    <div class="language-switch">
+        <a href="index_ja.html">日本語</a>
+    </div>
+
+    <!-- トップ画面 -->
+    <header class="hero">
+        <div class="hero-container">
+            <div class="hero-text">
+                <h1>Freezy AI</h1>
+                <p>No account registration or login required!<br>A completely free AI assistant ready to use the moment you install it.</p>
+                <a href="https://play.google.com/store/apps/details?id=com.galaxyexpress.freezyai" class="download-btn">Download for free on Google Play</a>
+            </div>
+            <div class="hero-image">
+                <!-- 🌟 英語版の画像に変更 -->
+                <img src="images/No1_en.jpg" alt="Freezy AI Top Screen">
+            </div>
+        </div>
+        
+        <div class="wave-divider">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V95.8C59.71,118.08,130.83,119.5,191.56,98.53,243.68,80.4,277.5,70.52,321.39,56.44Z" class="shape-fill"></path>
+            </svg>
+        </div>
+    </header>
+
+    <!-- 特徴セクション -->
+    <section class="features">
+        <h2 class="section-title">7 Reasons to Choose Freezy AI</h2>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🚫</div>
+                <h3 class="feature-title">No Registration Required</h3>
+                <p class="feature-desc">No email or social media linking needed. Start chatting with AI the moment you download and open the app.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🆓</div>
+                <h3 class="feature-title">Completely Free</h3>
+                <p class="feature-desc">No hidden in-app purchases or subscription traps. Earn points simply by watching short videos, and use all features for free forever.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">👨‍👩‍👧‍👦</div>
+                <h3 class="feature-title">Safe for All Ages</h3>
+                <p class="feature-desc">Features an intuitive and easy-to-understand design. No complicated settings, and your privacy is protected, making it safe for the whole family.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">💖</div>
+                <h3 class="feature-title">Personalized Responses</h3>
+                <p class="feature-desc">Simply set up your profile (age, hobbies, occupation, etc.), and the AI will understand your context to provide warm, personalized comments.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎛️</div>
+                <h3 class="feature-title">Customize AI Personality</h3>
+                <p class="feature-desc">Want strict advice? Or gentle encouragement? Use sliders to finely tune the AI's tone, perceived age, and response length to your exact liking.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎙️📸</div>
+                <h3 class="feature-title">Ask via Text, Voice, or Photo</h3>
+                <p class="feature-desc">Beyond keyboard input, you can speak into the microphone or send a photo taken with your camera and ask, "Tell me about this."</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">✨</div>
+                <h3 class="feature-title">Predicts Your Next Question</h3>
+                <p class="feature-desc">Based on the conversation flow, the AI prepares "questions you might want to ask next" as buttons. Just tap to keep the conversation flowing.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- スクリーンショットセクション -->
+    <section class="screenshots">
+        <h2 class="section-title">App Screenshots</h2>
+        <div class="screenshot-gallery">
+            <!-- 🌟 英語版の画像に変更 -->
+            <img src="images/No1_en.jpg" alt="Top Screen" class="screenshot-img">
+            <img src="images/No2_en.jpg" alt="Chat Screen" class="screenshot-img">
+            <img src="images/No3_en.jpg" alt="Profile Settings Screen" class="screenshot-img">
+            <img src="images/No4_en.jpg" alt="AI Customization Screen" class="screenshot-img">
+            <img src="images/No.5_en.jpg" alt="Personality Tuning Screen" class="screenshot-img">
+        </div>
+    </section>
+
+    <!-- フッター -->
+    <footer>
+        <p>&copy; 2026 Freezy AI. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
