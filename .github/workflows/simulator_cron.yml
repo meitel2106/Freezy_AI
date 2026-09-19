@@ -23,8 +23,10 @@ jobs:
           pip install -r requirements.txt
 
       - name: Create Firebase Credentials File
+        env:
+          FIREBASE_CREDENTIALS: ${{ secrets.FIREBASE_CREDENTIALS }}
         run: |
-          echo '${{ secrets.FIREBASE_CREDENTIALS }}' > freezyai-simulator/firebase_credentials.json
+          echo "$FIREBASE_CREDENTIALS" > freezyai-simulator/firebase_credentials.json
 
       - name: Run Simulator
         env:
