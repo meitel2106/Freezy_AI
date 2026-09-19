@@ -1,0 +1,34 @@
+name: Hourly World Simulator
+
+on:
+  schedule:
+    - cron: '0 * * * *'  # 1時間おいの毎分00秒に自動実行
+  workflow_dispatch:      # 手動でも実行できるようにする
+
+jobs:
+  run-simulator:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install Dependencies
+        run: |
+          cd freezyai-simulator
+          pip install -r requirements.txt
+
+      - name: Create Firebase Credentials File
+        run: |
+          echo '${{ secrets.FIREBASE_CREDENTIALS }}' > freezyai-simulator/firebase_credentials.json
+
+      - name: Run Simulator
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          cd freezyai-simulator
+          python simulator.py
