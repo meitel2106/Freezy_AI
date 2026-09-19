@@ -238,7 +238,7 @@ def generate_world_events():
   "events": [
     {{
       "agent_id": "エージェントのID",
-      "event_description": "この1時間、彼らが『本当に』何をしたか（趣味の実行、着替え、予定の逸脱などの具体的な情景描写）",
+      "event_description": "この30分間、彼らが『本当に』何をしたか（趣味の実行、着替え、予定の逸脱などの具体的な情景描写）",
       "new_status": {{
         "mood": 変動後の気分数値,
         "social": 変動後の社交感数値,
