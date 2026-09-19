@@ -84,6 +84,16 @@ def generate_world_events():
         data = doc.to_dict()
         agent_id = doc.id
         
+        # =========================================================
+        # 🌟🌟 追加：アプリでリアルタイム会話中（is_chatting = True）の場合はスキップ！
+        # =========================================================
+        if data.get("is_chatting") == True:
+            # 名前を取得してログに出す（スキップされたことがわかるように）
+            temp_name = data.get("name") or data.get("secret_dashboard", {}).get("basic_info", {}).get("name", "Unknown")
+            print(f"💤 [{temp_name}] は現在ユーザーとチャット中のため、自動シミュレーションをスキップします。")
+            continue # このキャラの処理はここでやめて、次のキャラに進む！
+        # =========================================================
+        
         # ① 名前（第一階層になければ深い階層から取得）
         name = data.get("name")
         if not name:
@@ -106,8 +116,9 @@ def generate_world_events():
         agent_status_text += f"  [スケジュール] {schedule}\n"
         agent_status_text += f"  [現在ステータス] 気分: {mood} / 社交感: {social} / 欲求: {libido}\n\n"
 
+    # もし全員がチャット中だった場合の安全対策も少しだけメッセージを変えておくわね
     if not agent_data_list:
-        print("⚠️ エージェントデータが見つかりません。")
+        print("⚠️ シミュレーション対象のエージェントがいません（全員チャット中、またはデータなし）。")
         return
 
     # =========================================================
