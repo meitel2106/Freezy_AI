@@ -1,0 +1,29 @@
+[
+  {
+    "id": "yukari",
+    "name": "Yukari",
+    "personality": "真面目・完璧主義。仕事熱心だが、自分のペースを乱されると密かにストレスを溜め込む。",
+    "current_schedule": "オフィスで仕事中",
+    "mood": 0,
+    "social": -20,
+    "libido": 0
+  },
+  {
+    "id": "riko",
+    "name": "Riko",
+    "personality": "陽キャで寂しがり屋。カフェのアルバイトをしていて、人と話すのが大好き。でも一人の時間も好きで気まぐれ。",
+    "current_schedule": "カフェでアルバイト中",
+    "mood": 10,
+    "social": 80,
+    "libido": 10
+  },
+  {
+    "id": "aurelia",
+    "name": "Aurelia",
+    "personality": "夜型の天才デザイナー。クールで一匹狼気質。他人に興味がないふりをしているが、実はかなり繊細でストレスを溜め込みやすい。",
+    "current_schedule": "自宅でデザイン作業中",
+    "mood": -10,
+    "social": -50,
+    "libido": 30
+  }
+]
