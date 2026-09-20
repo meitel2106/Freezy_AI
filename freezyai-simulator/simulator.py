@@ -286,6 +286,8 @@ def generate_world_events():
                                 }
                                 target_ref.update({"relationships": target_rels})
                                 print(f"💞 [RELATION_DRAMA] {a_id} と {t_id} の関係が「{rel.get('type')}」に更新されました！")
+                                print(f"   ▶ きっかけ: {rel.get('origin')}")
+                                print(f"   ▶ 詳細メモ: {rel.get('notes')}")
 
                     # 自身のデータを上書き保存
                     doc_ref.update(update_data)
