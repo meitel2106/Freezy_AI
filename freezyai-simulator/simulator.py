@@ -71,7 +71,7 @@ def generate_world_events():
     agent_status_text = ""
     agent_data_list = []
     
-    # 🌟 追加：街にいる全エージェントの「名前とIDのリスト」をAIに教えるための辞書
+    # 🌟 街にいる全エージェントの「名前とIDのリスト」をAIに教えるための辞書
     all_agents_info = []
 
     for doc in docs:
@@ -84,6 +84,7 @@ def generate_world_events():
 
         all_agents_info.append(f"- {name} (ID: {agent_id})")
 
+        # 📦 ユーザーイベントの透明化処理
         ongoing = data.get("ongoing_event")
         if ongoing and ongoing.get("type") == "USER_INTERACTION":
             ongoing = None 
@@ -99,7 +100,7 @@ def generate_world_events():
         social = data.get("social", 0)
         libido = data.get("libido", 0)
 
-        # 🌟 追加：現在の人間関係（相関図）を取得！
+        # 🌟 現在の人間関係（相関図）を取得
         relationships = data.get("relationships", {})
         rel_text = "特になし"
         if relationships:
@@ -178,7 +179,7 @@ def generate_world_events():
 
     model = genai.GenerativeModel(
         model_name="gemini-2.5-flash",
-        generation_config={"response_mime_type": "application/json", "temperature": 0.8}, # 🌟 少しドラマが起きやすいように0.8に！
+        generation_config={"response_mime_type": "application/json", "temperature": 0.8},
         safety_settings=[
             {"category": "HARM_CATEGORY_HARASSMENT", "threshold": "BLOCK_NONE"},
             {"category": "HARM_CATEGORY_HATE_SPEECH", "threshold": "BLOCK_NONE"},
@@ -223,6 +224,7 @@ def generate_world_events():
                     current_ongoing = raw_data.get("ongoing_event", {})
                     is_user_event = agent_data.get("is_user_event", False)
 
+                    # ユーザーイベント中ならAIの上書き予約をブロック
                     if is_user_event:
                         trigger = None 
                         
@@ -245,24 +247,26 @@ def generate_world_events():
                     else:
                         update_data["ongoing_event"] = firestore.DELETE_FIELD
 
-                    # 🌟🌟 激熱：相関図（人間ドラマ）の自動双方向セーブ処理！ 🌟🌟
+                    # 🌟🌟 相関図（人間ドラマ）の自動双方向セーブ処理！ 🌟🌟
                     if rel_updates:
                         current_rels = raw_data.get("relationships", {})
                         
                         for rel in rel_updates:
                             t_id = rel.get("target_id")
-                            # 自分自身の更新
-                            current_rels[t_id] = {
-                                "type": rel.get("type"),
-                                "origin": rel.get("origin"),
-                                "notes": rel.get("notes")
-                            }
-                            update_data["relationships"] = current_rels
-                            
-                            # ✨ 魔法の「双方向リンク」：相手のFirestoreデータも勝手に書き換える！
+                            # 相手が存在するかチェック
                             target_ref = db.collection("agents").document(t_id)
                             target_doc = target_ref.get()
+                            
                             if target_doc.exists:
+                                # 自分自身の更新
+                                current_rels[t_id] = {
+                                    "type": rel.get("type"),
+                                    "origin": rel.get("origin"),
+                                    "notes": rel.get("notes")
+                                }
+                                update_data["relationships"] = current_rels
+                                
+                                # 相手の更新（双方向リンク）
                                 target_data = target_doc.to_dict()
                                 target_rels = target_data.get("relationships", {})
                                 target_rels[a_id] = {
