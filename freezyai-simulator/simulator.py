@@ -149,48 +149,57 @@ def generate_world_events():
     agent_status_text = ""
     agent_data_list = []
 
+    # エージェントごとの情報をプロンプト用に文字列化する
     for doc in docs:
         data = doc.to_dict()
         agent_id = doc.id
         
-        if data.get("is_chatting") == True:
-            temp_name = data.get("name") or data.get("secret_dashboard", {}).get("basic_info", {}).get("name", "Unknown")
-            print(f"💤 [{temp_name}] はチャット中のため、スキップします。")
-            continue 
+        # ① 名前を取得
+        name = data.get("name")
+        if not name:
+            name = data.get("secret_dashboard", {}).get("basic_info", {}).get("name", "Unknown")
+
+        # =========================================================
+        # 🌟 おそらくこの辺りにお姉さんが書いた「ターン消費の処理」があるわね
+        # =========================================================
+        # (例: if ongoing_event: ターンを減らしてFirebaseを更新... 等)
+
+        # 🚨【超重要：ここを追加！】🚨
+        # チャット中、またはイベント進行中の場合はGeminiに渡すリストから除外する！
+        is_chatting = data.get("is_chatting", False)
+        ongoing = data.get("ongoing_event")
+        is_event_running = ongoing is not None and ongoing.get("remaining_turns", 0) > 0
+
+        if is_chatting or is_event_running:
+            print(f"⏭️ [SKIP] {name} はユーザーと対応中（またはイベント中）のため、裏側の自律行動シミュレーションをスキップします。")
+            continue  # 👈 これを入れることで、下の「リストに追加する処理」をすっ飛ばします！
+        # 🚨【追加ここまで】🚨
+
+        # ② 性格の取得
+        personality = data.get("secret_dashboard", {}).get("basic_info", {}).get("one_line_concept", "普通")
         
-        dash = data.get("secret_dashboard", {})
-        name = data.get("name", dash.get("basic_info", {}).get("name", "Unknown"))
-        personality = dash.get("basic_info", {}).get("one_line_concept", "普通")
-        schedule = dash.get("current_state", {}).get("現在行動", "フリータイム")
+        # ③ スケジュールの取得
+        schedule = data.get("secret_dashboard", {}).get("current_state", {}).get("現在行動", "フリータイム")
         
+        # ステータス取得
         mood = data.get("mood", 0)
         social = data.get("social", 0)
         libido = data.get("libido", 0)
 
-        # =========================================================
-        # 🌟 1. 現在進行中の継続イベントがあるかチェック！
-        # =========================================================
-        ongoing_event = data.get("ongoing_event", {})
-        ongoing_name = ongoing_event.get("name", "")
-        ongoing_turns = ongoing_event.get("remaining_turns", 0)
+        # 🌟 スキップされなかった（フリーな）エージェントだけがリストに入る！
+        agent_data_list.append({"id": agent_id, "ref": doc.reference})
 
-        if ongoing_turns > 0:
-            ongoing_instruction = f"🚨【継続イベント実行中】現在「{ongoing_name}」の真っ最中（残り{ongoing_turns}ターン）です。通常の予定を無視し、このイベントの続きを30分間どう過ごしたか描写してください。"
-        else:
-            ongoing_instruction = "【継続イベント】現在なし。通常のスケジュールや自律判断で行動してください。"
+        agent_status_text += f"■ {name} (ID: {agent_id} / 性格: {personality})\n"
+        agent_status_text += f"  [スケジュール] {schedule}\n"
+        agent_status_text += f"  [現在ステータス] 気分: {mood} / 社交感: {social} / 欲求: {libido}\n\n"
 
-        # 更新時に古いデータを参照できるように raw_data もリストに入れておく
-        agent_data_list.append({"id": agent_id, "ref": doc.reference, "raw_data": data})
-
-        agent_status_text += f"■ {name} (ID: {agent_id})\n"
-        agent_status_text += f"  [本来の予定] {schedule}\n"
-        agent_status_text += f"  {ongoing_instruction}\n"
-        agent_status_text += f"  [現在ステータス] 気分: {mood} / 社交感: {social} / 欲求: {libido}\n"
-        agent_status_text += "-----------------------------------\n"
-
+    # =========================================================
+    # 🚨【超重要：ループを抜けた後も修正！】🚨
+    # =========================================================
+    # もし全員がユーザーと対応中で、リストが空っぽになった場合はAPIを呼ばずに終了する
     if not agent_data_list:
-        print("⚠️ シミュレーション対象のエージェントがいません。")
-        return
+        print("⏸️ 現在、裏側で自律行動させるフリーなエージェントがいません。Gemini APIの呼び出しをスキップします。")
+        return  # 👈 これで下の Gemini の呼び出しを完全にキャンセルする！
 
     # =========================================================
     # 🧠 2. Geminiへのマスタープロンプト（自律ターン予約機能付き）
