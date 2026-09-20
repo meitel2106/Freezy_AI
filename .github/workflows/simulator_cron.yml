@@ -2,7 +2,7 @@ name: World Simulator Cron
 
 on:
   schedule:
-    - cron: '*/30 * * * *' # 30分ごとに自動実行
+    cron: '7,37 * * * *' # 30分ごと（00分の混雑を回避）
   workflow_dispatch: # いつでも手動で実行できるボタンを表示
 
 jobs:
