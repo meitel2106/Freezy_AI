@@ -1,0 +1,29 @@
+name: World Simulator Cron
+
+on:
+  schedule:
+    - cron: '*/30 * * * *' # 30分ごとに自動実行
+  workflow_dispatch: # ボタンで手動実行するための設定
+
+jobs:
+  run-simulation:
+    runs-on: ubuntu-latest
+    steps:
+      - name: コードをチェックアウト
+        uses: actions/checkout@v4
+
+      - name: Pythonのセットアップ
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: ライブラリのインストール
+        run: |
+          python -m pip install --upgrade pip
+          pip install firebase-admin google-generativeai
+
+      - name: シミュレーターの実行 🌍
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          FIREBASE_CREDENTIALS_JSON: ${{ secrets.FIREBASE_CREDENTIALS_JSON }}
+        run: python simulator.py
