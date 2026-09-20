@@ -186,8 +186,13 @@ def generate_world_events():
         social = data.get("social", 0)
         libido = data.get("libido", 0)
 
-        # 🌟 スキップされなかった（フリーな）エージェントだけがリストに入る！
-        agent_data_list.append({"id": agent_id, "ref": doc.reference})
+        # 🌟 フリーなエージェントだけがリストに入る！（元のデータも一緒に保存）
+        agent_data_list.append({
+            "id": agent_id, 
+            "ref": doc.reference,
+            "raw_data": data,  # 👈 元のデータ（隠蔽前）を保存
+            "is_user_event": (data.get("ongoing_event", {}).get("type") == "USER_INTERACTION") # 👈 🌟 ユーザーイベント中かどうかをフラグで持たせる！
+        })
 
         agent_status_text += f"■ {name} (ID: {agent_id} / 性格: {personality})\n"
         agent_status_text += f"  [スケジュール] {schedule}\n"
@@ -281,7 +286,12 @@ def generate_world_events():
 
                     # 🌟 継続イベントのターン管理ロジック 🌟
                     current_ongoing = raw_data.get("ongoing_event", {})
-                    
+                    is_user_event = agent_data.get("is_user_event", False) # 👈 🌟 さっき保存したフラグを取り出す
+
+                    # もしAIが予約を出してきても、ユーザーイベント中なら無視する（上書きさせない）！
+                    if is_user_event:
+                        trigger = None 
+                        
                     if trigger and trigger.get("turns", 0) > 0:
                         # ① AIが【新規イベント】を予約した！
                         print(f"🎉 [NEW_EVENT] {a_id} が「{trigger.get('name')}」を {trigger.get('turns')} ターン予約しました！")
