@@ -1,8 +1,0 @@
-firebase-admin==6.5.0
-google-generativeai==0.8.3
-google-api-core==2.19.0
-grpcio==1.62.2
-googleapis-common-protos==1.63.2
-protobuf==4.25.3
-requests==2.31.0
-httpx==0.27.0
